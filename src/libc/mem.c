@@ -339,16 +339,13 @@ void kfree(size_t address) {
     merge_free();
 }
 
-void print_memory() {
-    kprintlnf("Total Physical Memory: {i}kb", (FREE_MEM_END - FREE_MEM_START) / 1024);
-
+memory_info mem_info() {
     int free_total = 0;
     memorynode *current = free;
     while (current != NULL) {
         free_total += current->size;
         current = current->next;
     }
-    kprintlnf("Total Free: {i}kb", free_total / 1024);
 
     int allocated_total = 0;
     current = allocated;
@@ -356,12 +353,31 @@ void print_memory() {
         allocated_total += current->size;
         current = current->next;
     }
-    kprintlnf("Total Allocated: {i}kb", allocated_total / 1024);
 
-    kprintlnf("Number of allocations: {i}", length(allocated));
-    kprintlnf("Number of free gaps: {i}", length(free));
-    kprintlnf("Start of Memory: {x}", FREE_MEM_START);
-    kprintlnf("End of Memory: {x}", FREE_MEM_END - 1);
+    memory_info result = {
+        .physical = (FREE_MEM_END - FREE_MEM_START),
+        .free = free_total,
+        .allocated = allocated_total,
+        .allocations = length(allocated),
+        .gaps = length(free),
+        .start = FREE_MEM_START,
+        .end = FREE_MEM_END - 1,
+    };
+
+    return result;
+}
+
+void print_memory() {
+    memory_info info = mem_info();
+    kprintlnf("Total Physical Memory: {i}kb", info.physical / 1024);
+
+    kprintlnf("Total Free: {i}kb", info.free / 1024);
+    kprintlnf("Total Allocated: {i}kb", info.allocated / 1024);
+
+    kprintlnf("Number of allocations: {i}", info.allocations);
+    kprintlnf("Number of free gaps: {i}", info.gaps);
+    kprintlnf("Start of Memory: {x}", info.start);
+    kprintlnf("End of Memory: {x}", info.end);
 }
 
 void memory_map() {

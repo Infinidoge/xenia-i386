@@ -46,6 +46,17 @@ memorynode *delete_by_address(memorynode *list, size_t address);
 
 memorynode *find(memorynode *list, size_t address);
 
+typedef struct MemoryInfo {
+    size_t physical;
+    size_t free;
+    size_t allocated;
+    uint16_t allocations;
+    uint16_t gaps;
+    size_t start;
+    size_t end;
+} memory_info;
+
+memory_info mem_info();
 void print_memory();
 void memory_map();
 
