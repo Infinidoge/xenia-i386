@@ -166,7 +166,7 @@ void irq_install() {
     /* Enable interruptions */
     asm volatile("sti");
     /* IRQ0: timer */
-    init_timer(1000);
+    init_timer(1193); // ticks is roughly milliseconds
     /* IRQ1: keyboard */
     init_keyboard();
 }
