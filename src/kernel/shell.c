@@ -1,5 +1,6 @@
 #include "shell.h"
 #include "../cpu/info.h"
+#include "../cpu/timer.h"
 #include "../cpu/types.h"
 #include "../drivers/keyboard.h"
 #include "../drivers/screen.h"
@@ -21,6 +22,8 @@ typedef struct Command {
     { #name, cmd_##name, help }
 
 CMD(end);
+CMD(uptime);
+CMD(neofetch);
 CMD(test);
 /* CMD(program); */
 CMD(visualise);
@@ -35,6 +38,8 @@ CMD(clear);
 
 const command commands[] = {
     CMDREF(end, "Halts the CPU"),
+    CMDREF(uptime, "Prints the current uptime"),
+    CMDREF(neofetch, "A nerd's calling card"),
     CMDREF(test, "Runs whatever test code is currently in place"),
     /* CMDREF(program, "Runs the program"), */
     CMDREF(visualise, "Runs the visualiser"),
@@ -52,6 +57,45 @@ CMD(end) {
     UNUSED(input);
     kprint("Exiting. Bye!\n");
     schedule(&stop);
+}
+
+CMD(uptime) {
+    UNUSED(input);
+
+    kprintlnf("Uptime: {i} seconds", get_tick() / 1000);
+}
+
+CMD(neofetch) {
+    UNUSED(input);
+    cpu_information cpu = cpu_info();
+    memory_info mem = mem_info();
+
+    // clang-format off
+    kprintlnf("MMMMMMMMWKOKMMMMMMMMMMMMMMMWOdKNMMMMMMMM");
+    kprintlnf("MMMMMMWX0d;dWMMMMMMMMMMMMMM0:,oOKNMMMMMM   Xenia OS for i386");
+    kprintlnf("MMMMWX0kx:.:KMMMMMMMMMMMMMNl..:xkOKWMMMM   -----------------");
+    kprintlnf("MMMN0Okkl'.'kWWXK0000KXWMWx'...lkkk0XWMM   An OS by Infinidoge");
+    kprintlnf("MWXOkkkd,...lOxlccccccox0O;....'okkkOXWM");
+    kprintlnf("WXOkkkd;....'cccccccccccl;......,dkkkOKW   Hardware: QEMU VM");
+    kprintlnf("XOkkkd;......;::cccccccc:,.......;dkkkOX   - CPU: {i} core Intel Pentium II(-ish)", cpu.maximum_logical_processors);
+    kprintlnf("Kkkkd;.....',,,;::cccccc:;,'......,okkkK   - Memory: {i}kb/{i}kb", mem.allocated / 1024, mem.physical / 1024);
+    kprintlnf("Kkxl,...',::::;;,;::ccc:;;:::;,'...'cxkK   - Resolution: 80x25 characters");
+    kprintlnf("Nkc''',cooolloooc;,;:::cloolloool;''':kN");
+    kprintlnf("WXx:;:ooc;,,,,:ldo;,;;ldl:;,,;;:odc;;l0W   Terminal: 80x25 Text Mode VGA");
+    kprintlnf("MMWKxdd:,,,,,,,,cdl;,cdl;,,,,,,,;odc:l0M   - Shell: Currently Unnamed");
+    kprintlnf("MMMMN0d:,,,,,,,,:do;;ldl;,,,,,,,;lxoclOW");
+    kprintlnf("MMMMMXOxl:,,,,,:oxdoodxdc;,,,,;:lddlclOW   Disks:");
+    kprintlnf("MMMMMWNKOdlccloooc:;;:cloolccclddocccl0M   - None (yet) :)");
+    kprintlnf("MMMMMMMWNXK0xlc:;,,,,,,,;cloooollccccdXM");
+    kprintlnf("MMMMMMMMMMMWKd;,,,,,,,,,,;;:ccccccccckNM   Uptime: {i} seconds", get_tick() / 1000);
+    kprintlnf("MMMMMMMMMMMMMNkc,,'''',,;:ccccccccccoKWM");
+    kprintlnf("MMMMMMMMMMMMMMW0c......;:cccccccccclOWMM");
+    kprintlnf("MMMMMMMMMMMMMMMMKdc::cxOdccccccccclkNMMM");
+    kprintlnf("MMMMMMMMMMMMMMMMMMWWWWMMKdccccccclONMMMM");
+    kprintlnf("MMMMMMMMMMMMMMMMMMMMMMMMW0lcccclxKWMMMMM");
+    kprintlnf("MMMMMMMMMMMMMMMMMMMMMMMMMXdcldOKWMMMMMMM");
+    kprintlnf("MMMMMMMMMMMMMMMMMMMMMMMMMW0kKNWMMMMMMMMM");
+    // clang-format on
 }
 
 CMD(test) {
