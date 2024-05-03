@@ -102,6 +102,29 @@ void bin_to_ascii_padded(unsigned int n, char str[], int padding) {
     reverse(str);
 }
 
+#define MINUTE 60
+#define HOUR MINUTE * 60
+#define DAY HOUR * 24
+
+void format_time(unsigned int seconds, char str[]) {
+    unsigned int hours = 0;
+    unsigned int minutes = 0;
+
+    while (seconds >= HOUR) {
+        seconds -= HOUR;
+        hours++;
+    }
+
+    while (seconds >= MINUTE) {
+        seconds -= MINUTE;
+        minutes++;
+    }
+
+    if (seconds > 0) {
+        append(str, 's');
+    }
+}
+
 /* K&R */
 void reverse(char s[]) {
     int c, i, j;
