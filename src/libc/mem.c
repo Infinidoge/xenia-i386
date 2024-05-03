@@ -277,32 +277,32 @@ size_t kmalloc(size_t size) {
     memorynode *current;
 
     switch (FIT_TYPE) {
-    case FIRST:
-        free_target = free;
-        break;
+        case FIRST:
+            free_target = free;
+            break;
 
-    case BEST:
-        free = sort_by_size(free, true);
+        case BEST:
+            free = sort_by_size(free, true);
 
-        current = free;
-        while (current != NULL && current->size < size) {
-            current = current->next;
-        }
+            current = free;
+            while (current != NULL && current->size < size) {
+                current = current->next;
+            }
 
-        if (current == NULL)
-            return (size_t)NULL;
+            if (current == NULL)
+                return (size_t)NULL;
 
-        free_target = current;
-        break;
+            free_target = current;
+            break;
 
-    case WORST:
-        free = sort_by_size(free, false);
+        case WORST:
+            free = sort_by_size(free, false);
 
-        if (free->size < size)
-            return (size_t)NULL;
+            if (free->size < size)
+                return (size_t)NULL;
 
-        free_target = free;
-        break;
+            free_target = free;
+            break;
     }
 
     size_t address = free_target->address;

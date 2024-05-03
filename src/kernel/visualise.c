@@ -408,18 +408,18 @@ void visualiser() {
     wait(20 * SPEED_FACTOR);
 
     switch (algorithm) {
-    case BUBBLE:
-        visualise_bubble(array);
-        break;
-    case INSERTION:
-        visualise_insertion(array);
-        break;
-    case QUICK:
-        visualise_quick(array);
-        break;
-    case MERGE:
-        visualise_merge(array);
-        break;
+        case BUBBLE:
+            visualise_bubble(array);
+            break;
+        case INSERTION:
+            visualise_insertion(array);
+            break;
+        case QUICK:
+            visualise_quick(array);
+            break;
+        case MERGE:
+            visualise_merge(array);
+            break;
     }
 
     while (running) {

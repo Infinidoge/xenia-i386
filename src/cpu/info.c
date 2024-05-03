@@ -22,18 +22,18 @@ cpu_information cpu_info() {
 
     enum ProcessorType type;
     switch (registers.eax >> 12 & 0b11) {
-    case 0b00:
-        type = ORIGINAL_OEM;
-        break;
-    case 0b01:
-        type = INTEL_OVERDRIVE;
-        break;
-    case 0b10:
-        type = DUAL_PROCESSOR;
-        break;
-    case 0b11:
-        type = INTEL_RESERVED;
-        break;
+        case 0b00:
+            type = ORIGINAL_OEM;
+            break;
+        case 0b01:
+            type = INTEL_OVERDRIVE;
+            break;
+        case 0b10:
+            type = DUAL_PROCESSOR;
+            break;
+        case 0b11:
+            type = INTEL_RESERVED;
+            break;
     }
 
     bool htt = BIT(registers.edx, 28);

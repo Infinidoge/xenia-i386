@@ -199,24 +199,24 @@ enum Specifier check_specifier(const int index, const char *string) {
 
     if (string[index - 2] == '{') {
         switch (string[index - 1]) {
-        case 'i':
-            return INT;
-        case 'u':
-            return UINT;
-        case 'x':
-            return HEX;
-        case 'b':
-            return BIN;
-        case '8':
-            return BIN_8;
-        case 'F':
-            return BIN_16;
-        case 'Z':
-            return BIN_32;
-        case 'B':
-            return BOOL;
-        default:
-            return INVALID;
+            case 'i':
+                return INT;
+            case 'u':
+                return UINT;
+            case 'x':
+                return HEX;
+            case 'b':
+                return BIN;
+            case '8':
+                return BIN_8;
+            case 'F':
+                return BIN_16;
+            case 'Z':
+                return BIN_32;
+            case 'B':
+                return BOOL;
+            default:
+                return INVALID;
         }
     }
 
@@ -231,90 +231,90 @@ void vkprintf(const char *format, va_list ptr) {
             continue;
 
         switch (check_specifier(i, format)) {
-        case NONE:
-            break;
-        case INVALID:
-            kprint_until(&format[last], '{');
-            kprint("{INVALID SPECIFIER}");
-            va_arg(ptr, void *);
-            last = i + 1;
-            break;
-        case STRING:
-            kprint_until(&format[last], '{');
-            kprint(va_arg(ptr, char *));
-            last = i + 1;
-            break;
-        case INT:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[16];
-                int_to_ascii(va_arg(ptr, int), tmp);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case UINT:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[16];
-                uint_to_ascii(va_arg(ptr, int), tmp);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case HEX:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[16];
-                hex_to_ascii(va_arg(ptr, int), tmp);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case BIN:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[32];
-                bin_to_ascii(va_arg(ptr, int), tmp);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case BIN_8:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[32];
-                bin_to_ascii_padded(va_arg(ptr, int), tmp, 8);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case BIN_16:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[32];
-                bin_to_ascii_padded(va_arg(ptr, int), tmp, 16);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case BIN_32:
-            kprint_until(&format[last], '{');
-            {
-                char tmp[32];
-                bin_to_ascii_padded(va_arg(ptr, int), tmp, 32);
-                kprint(tmp);
-            }
-            last = i + 1;
-            break;
-        case BOOL:
-            kprint_until(&format[last], '{');
-            if (va_arg(ptr, int))
-                kprint("True");
-            else
-                kprint("False");
-            last = i + 1;
-            break;
+            case NONE:
+                break;
+            case INVALID:
+                kprint_until(&format[last], '{');
+                kprint("{INVALID SPECIFIER}");
+                va_arg(ptr, void *);
+                last = i + 1;
+                break;
+            case STRING:
+                kprint_until(&format[last], '{');
+                kprint(va_arg(ptr, char *));
+                last = i + 1;
+                break;
+            case INT:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[16];
+                    int_to_ascii(va_arg(ptr, int), tmp);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case UINT:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[16];
+                    uint_to_ascii(va_arg(ptr, int), tmp);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case HEX:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[16];
+                    hex_to_ascii(va_arg(ptr, int), tmp);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case BIN:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[32];
+                    bin_to_ascii(va_arg(ptr, int), tmp);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case BIN_8:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[32];
+                    bin_to_ascii_padded(va_arg(ptr, int), tmp, 8);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case BIN_16:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[32];
+                    bin_to_ascii_padded(va_arg(ptr, int), tmp, 16);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case BIN_32:
+                kprint_until(&format[last], '{');
+                {
+                    char tmp[32];
+                    bin_to_ascii_padded(va_arg(ptr, int), tmp, 32);
+                    kprint(tmp);
+                }
+                last = i + 1;
+                break;
+            case BOOL:
+                kprint_until(&format[last], '{');
+                if (va_arg(ptr, int))
+                    kprint("True");
+                else
+                    kprint("False");
+                last = i + 1;
+                break;
         }
     }
     kprint(&format[last]);

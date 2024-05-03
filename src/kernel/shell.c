@@ -148,18 +148,18 @@ CMD(cpuid) {
 
         kprint("Processor Type: ");
         switch (information.processor_type) {
-        case ORIGINAL_OEM:
-            kprintln("Original OEM");
-            break;
-        case INTEL_OVERDRIVE:
-            kprintln("Intel Overdrive");
-            break;
-        case DUAL_PROCESSOR:
-            kprintln("Dual Processor");
-            break;
-        case INTEL_RESERVED:
-            kprintln("Intel Reserved");
-            break;
+            case ORIGINAL_OEM:
+                kprintln("Original OEM");
+                break;
+            case INTEL_OVERDRIVE:
+                kprintln("Intel Overdrive");
+                break;
+            case DUAL_PROCESSOR:
+                kprintln("Dual Processor");
+                break;
+            case INTEL_RESERVED:
+                kprintln("Intel Reserved");
+                break;
         }
 
         kprintlnf("CLFLUSH Line Size: {u}", information.clflush_line_size);
