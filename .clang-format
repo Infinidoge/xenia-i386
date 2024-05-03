@@ -1,7 +1,29 @@
-IndentWidth: 4
-AlignAfterOpenBracket: false
+﻿---
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveAssignments: 'false'
+AlignConsecutiveDeclarations: 'false'
+AlignConsecutiveMacros: 'false'
 AlignEscapedNewlines: Left
-AllowShortFunctionsOnASingleLine: Empty
 AlignOperands: Align
+AllowAllArgumentsOnNextLine: 'true'
+AllowShortFunctionsOnASingleLine: Empty
 BreakBeforeBinaryOperators: NonAssignment
-ColumnLimit: 120
+BreakBeforeTernaryOperators: 'true'
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+ColumnLimit: '120'
+IndentCaseLabels: 'true'
+IndentPPDirectives: None
+IndentWidth: '4'
+PointerAlignment: Right
+SpaceBeforeAssignmentOperators: 'true'
+SpaceBeforeInheritanceColon: 'true'
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: 'true'
+SpaceInEmptyParentheses: 'false'
+SpacesBeforeTrailingComments: '1'
+SpacesInAngles: 'false'
+SpacesInContainerLiterals: 'false'
+TabWidth: '4'
+UseTab: Never
+...
